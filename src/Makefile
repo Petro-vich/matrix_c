@@ -6,7 +6,7 @@ SRC_OBJ = $(SRC:.c=.o)
 
 TARGET = main
 
-all: $(TARGET) start
+all: $(TARGET) start clang-format
 
 $(TARGET): $(SRC_OBJ)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC_OBJ)
@@ -17,6 +17,9 @@ $(TARGET): $(SRC_OBJ)
 start: $(TARGET)
 	./main
 
+clang-format:
+	clang-format -n *.c *.h
+	
 clean:
 	rm -f *.o main
 
