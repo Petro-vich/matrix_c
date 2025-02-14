@@ -18,6 +18,8 @@ start: $(TARGET)
 	./main
 
 clean:
-	rm -f *.o
+	rm -f *.o main
+
+re: clean all
 
 
