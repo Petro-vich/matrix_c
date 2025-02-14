@@ -3,7 +3,7 @@
 int s21_mult_number(matrix_t *A, double number, matrix_t *result){
     int MatrixCheck = OK;
 
-    s21_create_matrix(result->rows, result->columns, result);
+    s21_create_matrix(A->rows, A->columns, result);
 
     if (A->rows < 1 || A->columns < 1 || result == NULL){
         MatrixCheck = INCORRECT_MATRIX;
