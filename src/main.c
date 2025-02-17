@@ -1,13 +1,15 @@
 #include "s21_matrix.h"
 
 int main(void) {
-  int rows = 3;
-  int columns = 2;
+  int rows = 4;
+  int columns = 4;
   matrix_t new_matrix;
   matrix_t new_matrix2;
   matrix_t sum_2matrix;
   matrix_t mult_matrix;
   matrix_t transpose_matrix;
+  matrix_t calc_complements;
+
   s21_create_matrix(rows, columns, &new_matrix);
   s21_create_matrix(rows, columns, &new_matrix2);
   puts("Matrix№1");
@@ -27,6 +29,10 @@ int main(void) {
   s21_print_matrix(&mult_matrix);
 
   s21_transpose(&new_matrix2, &transpose_matrix);
-  puts("\nransponse_matrix: ");
+  puts("\ntransponse_matrix: ");
   s21_print_matrix(&transpose_matrix);
+
+  s21_create_matrix(new_matrix.rows, new_matrix.columns, &calc_complements);
+  s21_calc_complements(&new_matrix, &calc_complements);
+  puts("\ncalc_complements ");
 }
