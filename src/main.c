@@ -1,15 +1,14 @@
 #include "s21_matrix.h"
 
 int main(void) {
-  int rows = 4;
-  int columns = 4;
+  int rows = 3;
+  int columns = 3;
   matrix_t new_matrix;
   matrix_t new_matrix2;
   matrix_t sum_2matrix;
   matrix_t mult_matrix;
   matrix_t transpose_matrix;
   matrix_t calc_complements;
-
   s21_create_matrix(rows, columns, &new_matrix);
   s21_create_matrix(rows, columns, &new_matrix2);
   puts("Matrix№1");

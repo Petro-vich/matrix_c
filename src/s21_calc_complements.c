@@ -4,7 +4,7 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {
   int pivot = 0;
 
   s21_copy_matrix(A, result);
-  printf("\n-----------------------\nCalc_compliments\n");
+  printf("\n\n\n-------------Calc_compliments-----------\n");
   s21_print_matrix(result);
   while (pivot < A->rows - 1) {
     for (int i = pivot + 1; i < A->rows; i++) {
