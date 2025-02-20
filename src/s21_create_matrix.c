@@ -1,8 +1,6 @@
 #include "s21_matrix.h"
 
 int s21_create_matrix(int rows, int columns, matrix_t *result) {
-  result->rows = rows;
-  result->columns = columns;
   int MatrixCheck = OK;
 
   if (rows <= 1 || columns <= 1 || result == NULL) {
@@ -22,6 +20,8 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {
         free(result->matrix); 
         break;
       }
+      result->rows = rows;
+      result->columns = columns;
     }
   }
   return MatrixCheck;
