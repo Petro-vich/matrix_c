@@ -60,6 +60,13 @@ START_TEST(eq_matrix_1){
     int result1 = s21_eq_matrix(&A, &B);
     ck_assert_int_eq(result1, SUCCESS);
     
+    s21_remove_matrix(&B);
+    s21_create_matrix(3, 3, &B);
+    s21_filling_matrix(&B, 4);
+
+    int result2 = s21_eq_matrix(&A, &B);
+    ck_assert_int_eq(result2, FAILURE);
+
     s21_remove_matrix(&A);
     s21_remove_matrix(&B);
 
@@ -106,6 +113,30 @@ START_TEST(eq_matrix_3){
 }
 END_TEST
 
+START_TEST(sum_matrix_1){
+    
+    matrix_t A;
+    matrix_t B;
+    matrix_t C;
+
+    s21_create_matrix(3, 3, &A);
+    s21_create_matrix(3, 3, &B);
+    s21_create_matrix(3, 3, &C);
+
+    s21_filling_matrix(&A, 5);
+    s21_filling_matrix(&B, 5);
+
+    int result = s21_sum_matrix(&A, &B, &C);
+
+    ck_assert_int_eq(result, OK);
+
+    s21_remove_matrix(&A);
+    s21_remove_matrix(&B);
+    s21_remove_matrix(&C);
+    
+}
+END_TEST
+
     Suite *matrix_suite(void){
     Suite *s;
     TCase *tc_core;
@@ -118,6 +149,8 @@ END_TEST
     tcase_add_test(tc_core, eq_matrix_1);
     tcase_add_test(tc_core, eq_matrix_2);
     tcase_add_test(tc_core, eq_matrix_3);
+    tcase_add_test(tc_core, sum_matrix_1);
+
 
     suite_add_tcase(s, tc_core);
 
