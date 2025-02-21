@@ -3,10 +3,11 @@
 int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
   int check_matrix = OK;
 
-  if (!A || !B || !A->matrix || !B->matrix){ 
+  if (!A || !B || !result || !A->matrix || !B->matrix || !result->matrix){ 
     check_matrix = INCORRECT_MATRIX;
   }
-  else if (A->rows != B->rows || A->columns != B->columns) {
+  else if (A->rows != B->rows || A->columns != B->columns ||
+B->rows != result->rows || B->rows != result->columns) {
     check_matrix = CALCULATION_ERROR;
   } 
   else {
@@ -17,5 +18,6 @@ int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
     }
   }
 
-  return OK;
+    return check_matrix;
 }
+// make function s21_check ipnut

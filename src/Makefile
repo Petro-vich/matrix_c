@@ -19,7 +19,7 @@ s21_matrix.a: $(SRC_OBJ)
 	
 test: s21_matrix.a
 	$(CC) -o test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
-	valgrind --tool=memcheck --leak-check=yes ./test_matrix
+	valgrind --tool=memcheck --leak-check=summary ./test_matrix
 
 
 
@@ -30,7 +30,7 @@ $(TARGET): $(SRC_OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 start: $(TARGET)
-	valgrind --tool=memcheck --leak-check=yes ./main
+	valgrind --tool=memcheck --leak-check=summary ./main
 
 
 
@@ -41,6 +41,7 @@ gcov_report:
 	lcov -t "Coverage Report" -c -d . --output-file coverage_report/coverage.info
 	genhtml coverage_report/coverage.info --output-directory coverage_report/
 	xdg-open coverage_report/index.html
+	
 clang-format:
 	clang-format -n *.c *.h
 	

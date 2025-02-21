@@ -29,4 +29,5 @@ int s21_calc_complements(matrix_t *A, matrix_t *result);
 // aux_fnc
 void s21_copy_matrix(matrix_t *A, matrix_t *result);
 void s21_filling_matrix(matrix_t *new_matrix, double number);
+int s21_memcmp(const void *str1, const void *str2, int n);
 #endif
