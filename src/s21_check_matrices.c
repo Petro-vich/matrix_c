@@ -21,10 +21,12 @@ int s21_check_matrices(int count, ...) {
 
   for (int j = 1; j < count; j++){
     matrix_t *matrix = va_arg(args, matrix_t *);
+    printf("\n%d\n", matrix->rows);
+    printf("\n%d\n", matrix->columns);
     if (matrix->rows != rows_matrix || matrix->columns != columns_matrix){
-    va_end(args);
+      va_end(args);
+      return CALCULATION_ERROR;
     }
-    return CALCULATION_ERROR;
   }
   va_end(args);
   return OK;
