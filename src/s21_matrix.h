@@ -4,9 +4,9 @@
 #define SUCCESS 1
 #define FAILURE 0
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 enum ERROR_CODES { OK, INCORRECT_MATRIX, CALCULATION_ERROR };
 
@@ -30,4 +30,5 @@ int s21_calc_complements(matrix_t *A, matrix_t *result);
 void s21_copy_matrix(matrix_t *A, matrix_t *result);
 void s21_filling_matrix(matrix_t *new_matrix, double number);
 int s21_memcmp(const void *str1, const void *str2, int n);
+int s21_check_matrices(int count, ...);
 #endif
