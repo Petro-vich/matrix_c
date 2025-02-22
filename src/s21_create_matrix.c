@@ -3,7 +3,7 @@
 int s21_create_matrix(int rows, int columns, matrix_t *result) {
   int MatrixCheck = OK;
 
-  if (rows <= 1 || columns <= 1 || result == NULL) {
+  if (rows < 1 || columns < 1 || result == NULL) {
     MatrixCheck = INCORRECT_MATRIX;
   } else {
     result->matrix = (double **)malloc(rows * sizeof(double *));  // массив указателей на строки

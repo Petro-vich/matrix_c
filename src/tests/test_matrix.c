@@ -21,8 +21,8 @@ START_TEST(create_matrix_2){
 
     matrix_t A;
     
-    int result = s21_create_matrix(1, 1, &A);
-    ck_assert_int_eq(result, INCORRECT_MATRIX);
+    int result = s21_create_matrix(3, 1, &A);
+    ck_assert_int_eq(result, OK);
     
     int result2 = s21_create_matrix(-1, 3, &A);
     ck_assert_int_eq(result2, INCORRECT_MATRIX);
@@ -246,6 +246,71 @@ START_TEST(sub_matrix_3){
 }
 END_TEST
 
+START_TEST (transpose_1) {
+
+    matrix_t A = {};
+    matrix_t B;
+
+    s21_create_matrix(5, 8, &A);
+    s21_filling_matrix(&A, 5.0);
+
+    int result = s21_transpose(&A, &B);
+
+    ck_assert_int_eq(result, OK);
+
+    s21_remove_matrix(&A);   
+    s21_remove_matrix(&B);
+}
+END_TEST    
+
+START_TEST (transpose_2) {
+
+    matrix_t A = {};
+    matrix_t B;
+
+    s21_create_matrix(1, 5, &A);
+    s21_filling_matrix(&A, 5.0);
+
+    int result = s21_transpose(&A, &B);
+
+    ck_assert_int_eq(result, OK);
+
+    s21_remove_matrix(&A);   
+    s21_remove_matrix(&B);
+}
+END_TEST
+
+START_TEST (transpose_3) {
+
+    matrix_t A = {};
+    matrix_t B;
+
+    s21_create_matrix(5, 1, &A);
+    s21_filling_matrix(&A, 5.0);
+
+    int result = s21_transpose(&A, &B);
+
+    ck_assert_int_eq(result, OK);
+
+    s21_remove_matrix(&A);   
+    s21_remove_matrix(&B);
+}
+END_TEST
+
+START_TEST (transpose_4) {
+
+    matrix_t A = {};
+    matrix_t B;
+
+    int result = s21_transpose(&A, &B);
+
+    ck_assert_int_eq(result, INCORRECT_MATRIX);
+
+    s21_remove_matrix(&A);   
+    s21_remove_matrix(&B);  
+}
+END_TEST
+
     Suite *matrix_suite(void){
     Suite *s;
     TCase *tc_core;
@@ -265,6 +330,11 @@ END_TEST
     tcase_add_test(tc_core, sub_matrix_1);
     tcase_add_test(tc_core, sub_matrix_2);
     tcase_add_test(tc_core, sub_matrix_3);
+    tcase_add_test(tc_core, transpose_1);
+    tcase_add_test(tc_core, transpose_2);
+    tcase_add_test(tc_core, transpose_3);
+    tcase_add_test(tc_core, transpose_4);
+
 
     suite_add_tcase(s, tc_core);
 
