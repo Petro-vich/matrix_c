@@ -60,16 +60,8 @@ START_TEST(eq_matrix_1){
     int result1 = s21_eq_matrix(&A, &B);
     ck_assert_int_eq(result1, SUCCESS);
     
-    s21_remove_matrix(&B);
-    s21_create_matrix(3, 3, &B);
-    s21_filling_matrix(&B, 4);
-
-    int result2 = s21_eq_matrix(&A, &B);
-    ck_assert_int_eq(result2, FAILURE);
-
     s21_remove_matrix(&A);
     s21_remove_matrix(&B);
-
 }
 END_TEST
 
@@ -110,6 +102,25 @@ START_TEST(eq_matrix_3){
 
     s21_remove_matrix(&A);
     s21_remove_matrix(&B);
+}
+END_TEST
+
+START_TEST(eq_matrix_4){
+    matrix_t A;
+    matrix_t B;
+
+    s21_create_matrix(3, 3, &A);
+    s21_create_matrix(3, 3, &B);
+
+    s21_filling_matrix(&A, 5);
+    s21_filling_matrix(&B, 4);
+    
+    int result1 = s21_eq_matrix(&A, &B);
+    ck_assert_int_eq(result1, FAILURE);
+    
+    s21_remove_matrix(&A);
+    s21_remove_matrix(&B);
+
 }
 END_TEST
 
@@ -247,6 +258,7 @@ END_TEST
     tcase_add_test(tc_core, eq_matrix_1);
     tcase_add_test(tc_core, eq_matrix_2);
     tcase_add_test(tc_core, eq_matrix_3);
+    tcase_add_test(tc_core, eq_matrix_4);
     tcase_add_test(tc_core, sum_matrix_1);
     tcase_add_test(tc_core, sum_matrix_2);
     tcase_add_test(tc_core, sum_matrix_3);
