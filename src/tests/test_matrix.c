@@ -54,9 +54,18 @@ START_TEST(eq_matrix_1){
     s21_create_matrix(3, 3, &A);
     s21_create_matrix(3, 3, &B);
 
-    s21_filling_matrix(&A, 5);
-    s21_filling_matrix(&B, 5);
-    
+    for (int i = 0; i < A.rows; i++) {
+        for (int j = 0; j < A.columns; j++) {
+            A.matrix[i][j] = 5;
+        }
+    }
+
+    for (int i = 0; i < B.rows; i++) {
+        for (int j = 0; j < B.columns; j++) {
+            B.matrix[i][j] = 5;
+        }
+    }
+
     int result1 = s21_eq_matrix(&A, &B);
     ck_assert_int_eq(result1, SUCCESS);
     
