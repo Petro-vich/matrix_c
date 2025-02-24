@@ -306,8 +306,6 @@ START_TEST (transpose_4) {
 
     ck_assert_int_eq(result, INCORRECT_MATRIX);
 
-    s21_remove_matrix(&A);   
-    s21_remove_matrix(&B);  
 }
 END_TEST
 
