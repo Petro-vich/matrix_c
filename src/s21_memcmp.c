@@ -1,5 +1,5 @@
 #include "s21_matrix.h"
-  
+
 int s21_memcmp(const void *str1, const void *str2, int n) {
   int test = 0;
   const unsigned char *ptr1 = str1;
