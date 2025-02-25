@@ -2,7 +2,7 @@
 
 int s21_check_matrices(int count, ...) {
   if (count < 1) return INCORRECT_MATRIX;
-  
+
   va_list args;
   va_start(args, count);
   double rows_matrix;
@@ -19,9 +19,9 @@ int s21_check_matrices(int count, ...) {
     columns_matrix = matrix->columns;
   }
 
-  for (int j = 1; j < count; j++){
+  for (int j = 1; j < count; j++) {
     matrix_t *matrix = va_arg(args, matrix_t *);
-    if (matrix->rows != rows_matrix || matrix->columns != columns_matrix){
+    if (matrix->rows != rows_matrix || matrix->columns != columns_matrix) {
       va_end(args);
       return CALCULATION_ERROR;
     }
