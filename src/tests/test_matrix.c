@@ -318,6 +318,167 @@ START_TEST (transpose_4) {
 }
 END_TEST
 
+// START_TEST(determinant_1) {
+//   matrix_t A;
+//   double result;
+
+//   s21_create_matrix(1, 1, &A);
+
+//   A.matrix[0][0] = 6;
+
+//   int ret = s21_determinant(&A, &result);
+//   ck_assert_int_eq(ret, OK);
+
+//   s21_remove_matrix(&A);
+// }
+// END_TEST
+
+// START_TEST(test_s21_determinant_2) {
+//   matrix_t M_1;
+//   double detM, detRes = -2;
+//   s21_create_matrix(2, 2, &M_1);
+//   M_1.matrix[0][0] = 1;
+//   M_1.matrix[0][1] = 2;
+//   M_1.matrix[1][0] = 3;
+//   M_1.matrix[1][1] = 4;
+//   int ret = s21_determinant(&M_1, &detM);
+//   ck_assert_int_eq(ret, OK);
+//   ck_assert_int_eq(detRes, detM);
+//   s21_remove_matrix(&M_1);
+// }
+// END_TEST
+
+
+START_TEST(determinant_1) {
+  matrix_t A;
+  double my_dtr;
+  double detRes = 2526440;
+  s21_create_matrix(4, 4, &A);
+
+  A.matrix[0][0] = 25;
+  A.matrix[0][1] = 16;
+  A.matrix[0][2] = 46;
+  A.matrix[0][3] = 0;
+  A.matrix[1][0] = 45;
+  A.matrix[1][1] = 34;
+  A.matrix[1][2] = 3;
+  A.matrix[1][3] = 41;
+  A.matrix[2][0] = 35;
+  A.matrix[2][1] = 61;
+  A.matrix[2][2] = 34;
+  A.matrix[2][3] = 11;
+  A.matrix[3][0] = 7;
+  A.matrix[3][1] = 3;
+  A.matrix[3][2] = 34;
+  A.matrix[3][3] = 3;  
+
+  int result = s21_determinant(&A, &my_dtr);
+  ck_assert_int_eq(result, OK);
+  double rounded_result = round(my_dtr * 1e6) / 1e6;
+  ck_assert_double_eq(rounded_result, 1010938);
+  s21_remove_matrix(&A);    
+}
+END_TEST
+
+START_TEST(determinant_2) {
+  matrix_t A = {0};
+  double detM, detRes = 73055   ;
+  s21_create_matrix(3, 3, &A);
+  A.matrix[0][0] = 25;
+  A.matrix[0][1] = 16;
+  A.matrix[0][2] = 46;
+  A.matrix[1][0] = 45;
+  A.matrix[1][1] = 34;
+  A.matrix[1][2] = 3;
+  A.matrix[2][0] = 35;
+  A.matrix[2][1] = 61;
+  A.matrix[2][2] = 34;
+
+  int ret = s21_determinant(&A, &detM);
+  ck_assert_int_eq(ret, OK);
+  ck_assert_int_eq(detRes, detM);
+  s21_remove_matrix(&A);
+}
+
+START_TEST(determinant_3) {
+  matrix_t A = {0};
+  double detM, detRes = 48730;
+  s21_create_matrix(3, 3, &A);
+                                A.matrix[0][0] = 0;
+                                A.matrix[0][1] = 16;
+                                A.matrix[0][2] = 46;
+                                A.matrix[1][0] = 45;
+                                A.matrix[1][1] = 34;
+                                A.matrix[1][2] = 3;
+                                A.matrix[2][0] = 35;
+                                A.matrix[2][1] = 61;
+                                A.matrix[2][2] = 34;
+
+  int ret = s21_determinant(&A, &detM);
+  ck_assert_int_eq(ret, OK);
+  ck_assert_int_eq(detRes, detM);
+  s21_remove_matrix(&A);
+}
+
+START_TEST(determinant_4) {
+  matrix_t M_1;
+  double detM, detRes = 0;
+  s21_create_matrix(3, 3, &M_1);
+  M_1.matrix[0][0] = 1;
+  M_1.matrix[0][1] = 2;
+  M_1.matrix[0][2] = 3;
+  M_1.matrix[1][0] = 4;
+  M_1.matrix[1][1] = 5;
+  M_1.matrix[1][2] = 6;
+  M_1.matrix[2][0] = 7;
+  M_1.matrix[2][1] = 8;
+  M_1.matrix[2][2] = 9;
+  int ret = s21_determinant(&M_1, &detM);
+  ck_assert_int_eq(ret, OK);
+  ck_assert_int_eq(detRes, detM);
+  s21_remove_matrix(&M_1);
+}
+END_TEST
+
+// END_TEST
+// START_TEST(test_s21_determinant_6) {
+//   matrix_t M_1 = {0};
+//   double detM;
+//   s21_create_matrix(3, 2, &M_1);
+//   int ret = s21_determinant(&M_1, &detM);
+//   ck_assert_int_eq(ret, INCORRECT);
+//   s21_remove_matrix(&M_1);
+// }
+// END_TEST
+// START_TEST(test_s21_determinant_7) {
+//   matrix_t M_1;
+//   double detM;
+//   s21_create_matrix(1, 1, &M_1);
+//   M_1.matrix[0][0] = INFINITY;
+//   int ret = s21_determinant(&M_1, &detM);
+//   ck_assert_int_eq(ret, ERROR);
+//   s21_remove_matrix(&M_1);
+// }
+// END_TEST
+// START_TEST(test_s21_determinant_8) {
+//   matrix_t M_1;
+//   double detM;
+//   s21_create_matrix(1, 1, &M_1);
+//   M_1.matrix[0][0] = -INFINITY;
+//   int ret = s21_determinant(&M_1, &detM);
+//   ck_assert_int_eq(ret, ERROR);
+//   s21_remove_matrix(&M_1);
+// }
+// END_TEST
+// START_TEST(test_s21_determinant_9) {
+//   matrix_t M_1 = {0};
+//   double detM = 0;
+//   s21_create_matrix(3, 0, &M_1);
+//   int ret = s21_determinant(&M_1, &detM);
+//   ck_assert_int_eq(ret, INCORRECT);
+// }
+// END_TEST
+
     Suite *matrix_suite(void){
     Suite *s;
     TCase *tc_core;
@@ -341,6 +502,11 @@ END_TEST
     tcase_add_test(tc_core, transpose_2);
     tcase_add_test(tc_core, transpose_3);
     tcase_add_test(tc_core, transpose_4);
+    tcase_add_test(tc_core, determinant_1);
+    tcase_add_test(tc_core, determinant_2);
+    tcase_add_test(tc_core, determinant_3);
+    tcase_add_test(tc_core, determinant_4);
+
 
 
     suite_add_tcase(s, tc_core);
