@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra 
-LDFLAGS = -lcheck -lm -lsubunit 	
+CFLAGS = -Wall -Wextra		
+LDFLAGS = -lcheck -lm -lsubunit
 
 SRC = $(wildcard *.c)
 SRC_OBJ = $(SRC:.c=.o)
@@ -17,9 +17,13 @@ s21_matrix.a: $(SRC_OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 	
-test: s21_matrix.a
+test_valgrind: s21_matrix.a
 	$(CC) -o test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
 	valgrind --tool=memcheck --leak-check=summary ./test_matrix
+
+test: s21_matrix.a
+	$(CC) -o test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
+	./test_matrix
 
 
 
