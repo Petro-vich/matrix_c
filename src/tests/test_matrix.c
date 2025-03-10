@@ -43,7 +43,7 @@ START_TEST(remove_matrix_1){
     
     ck_assert_ptr_eq(A.matrix, NULL);
 
-    //add tests for rows -1
+    
 }
 END_TEST
 
@@ -163,7 +163,7 @@ START_TEST(sum_matrix_2){
     matrix_t B = {0};
     matrix_t C = {0};
 
-    // s21_filling_matrix(&A, 5);
+    
     int result = s21_sum_matrix(&A, &B, &C);
 
     ck_assert_int_eq(result, INCORRECT_MATRIX);
@@ -224,7 +224,7 @@ START_TEST(sub_matrix_2){
     matrix_t B = {0};
     matrix_t C = {0};
 
-    // s21_filling_matrix(&A, 5);
+    
     int result = s21_sub_matrix(&A, &B, &C);
 
     ck_assert_int_eq(result, INCORRECT_MATRIX);
@@ -318,20 +318,20 @@ START_TEST (transpose_4) {
 }
 END_TEST
 
-// START_TEST(test_s21_determinant_2) {
-//   matrix_t M_1;
-//   double detM, detRes = -2;
-//   s21_create_matrix(2, 2, &M_1);
-//   M_1.matrix[0][0] = 1;
-//   M_1.matrix[0][1] = 2;
-//   M_1.matrix[1][0] = 3;
-//   M_1.matrix[1][1] = 4;
-//   int ret = s21_determinant(&M_1, &detM);
-//   ck_assert_int_eq(ret, OK);
-//   ck_assert_int_eq(detRes, detM);
-//   s21_remove_matrix(&M_1);
-// }
-// END_TEST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 START_TEST(determinant_1) {
@@ -473,7 +473,7 @@ START_TEST(calc_complements_1) {
     int ret = s21_calc_complements(&A, &result);
     ck_assert_int_eq(ret, OK);
     
-    // Проверяем, что результат соответствует ожидаемому дополнению для 2x2
+    
     ck_assert_double_eq(result.matrix[0][0], 4);
     ck_assert_double_eq(result.matrix[0][1], -3);
     ck_assert_double_eq(result.matrix[1][0], -2);
@@ -502,7 +502,7 @@ START_TEST(calc_complements_2) {
     int ret = s21_calc_complements(&A, &result);
     ck_assert_int_eq(ret, OK);
     
-    // Проверяем, что результат соответствует ожидаемому дополнению для 3x3
+    
     ck_assert_double_eq(result.matrix[0][0], 24);
     ck_assert_double_eq(result.matrix[0][1], -6);
     ck_assert_double_eq(result.matrix[0][2], 4);
@@ -525,7 +525,7 @@ START_TEST(calc_complements_3) {
     s21_create_matrix(1, 1, &A);
     A.matrix[0][0] = 5;
 
-    // Ожидаем ошибку для матрицы 1x1
+    
     int ret = s21_calc_complements(&A, &result);
     ck_assert_int_eq(ret, CALCULATION_ERROR);
     
@@ -539,7 +539,7 @@ START_TEST(calc_complements_4) {
     
     s21_create_matrix(2, 3, &A);
     
-    // Ожидаем ошибку для матрицы, не являющейся квадратной
+    
     int ret = s21_calc_complements(&A, &result);
     ck_assert_int_eq(ret, CALCULATION_ERROR);
     
@@ -572,7 +572,7 @@ START_TEST(calc_complements_5) {
     int ret = s21_calc_complements(&A, &result);
     ck_assert_int_eq(ret, OK);
     
-    // Проверка, что результат соответствует ожидаемым значениям
+    
     ck_assert_double_eq(result.matrix[0][0], 1);
     ck_assert_double_eq(result.matrix[1][1], 1);
     ck_assert_double_eq(result.matrix[2][2], 1);
