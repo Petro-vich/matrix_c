@@ -10,15 +10,14 @@ typedef struct matrix_struct {
   int columns;
 } matrix_t;
 
+#include <math.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
-#include <math.h>
+
 #include "aux_func/s21_aux_func.h"
 
 enum ERROR_CODES { OK, INCORRECT_MATRIX, CALCULATION_ERROR };
-
-
 
 int s21_create_matrix(int rows, int columns, matrix_t *result);
 void s21_remove_matrix(matrix_t *A);

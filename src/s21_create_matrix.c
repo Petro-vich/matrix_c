@@ -6,14 +6,12 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {
   if (rows < 0 || columns < 0 || result == NULL) {
     MatrixCheck = INCORRECT_MATRIX;
   } else {
-    result->matrix = (double **)malloc(
-        rows * sizeof(double *));  
+    result->matrix = (double **)malloc(rows * sizeof(double *));
     if (!result->matrix) {
       MatrixCheck = INCORRECT_MATRIX;
     }
     for (int i = 0; MatrixCheck == OK && i < rows; i++) {
-      result->matrix[i] =
-          (double *)malloc(columns * sizeof(double));  
+      result->matrix[i] = (double *)malloc(columns * sizeof(double));
       if (!result->matrix[i]) {
         MatrixCheck = INCORRECT_MATRIX;
         for (int j = 0; j < i; j++) {

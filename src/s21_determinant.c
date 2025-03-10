@@ -1,7 +1,6 @@
 #include "s21_matrix.h"
 
 int s21_check_pivot(matrix_t *tmp, int *index_pivot) {
-
   int row_pivot = *index_pivot;
   int swap_count = 0;
 
@@ -32,10 +31,10 @@ int s21_zero_out(matrix_t *tmp, matrix_t *A, int *index_pivot) {
     }
 
     for (int i = *index_pivot + 1; i < A->rows; i++) {
-      double factorial = tmp->matrix[i][*index_pivot] / tmp->matrix[*index_pivot][*index_pivot];
+      double factorial = tmp->matrix[i][*index_pivot] /
+                         tmp->matrix[*index_pivot][*index_pivot];
 
       for (int j = 0; j < A->columns; j++) {
-
         tmp->matrix[i][j] =
             tmp->matrix[i][j] - (factorial * tmp->matrix[*index_pivot][j]);
       }
@@ -47,7 +46,9 @@ int s21_zero_out(matrix_t *tmp, matrix_t *A, int *index_pivot) {
 }
 
 int s21_determinant(matrix_t *A, double *result) {
-  if (A->columns != A->rows){return INCORRECT_MATRIX;}
+  if (A->columns != A->rows) {
+    return INCORRECT_MATRIX;
+  }
   int status_matrix = s21_check_matrices(1, A);
   matrix_t tmp = {};
 
