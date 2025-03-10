@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "s21_matrix.h": "c",
-        "check.h": "c"
+        "check.h": "c",
+        "functional": "c"
     }
 }

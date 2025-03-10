@@ -17,7 +17,7 @@
                 "${workspaceFolder}/src/s21_print_matrix.c",
                 "${workspaceFolder}/src/s21_mult_number.c",
                 "${workspaceFolder}/src/s21_transpose.c",
-                "${workspaceFolder}/src/s21_calc_complements.c",
+                "${workspaceFolder}/src/s21_determinant.c",
                 "${workspaceFolder}/src/s21_copy_matrix.c",
                 "${workspaceFolder}/src/s21_check_matrices.c",
                 "${workspaceFolder}/src/s21_memcmp.c",
