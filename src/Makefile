@@ -1,57 +1,62 @@
 CC = gcc
-CFLAGS = -Wall -Wextra		
+CFLAGS = -Wall -Wextra
 LDFLAGS = -lcheck -lm -lsubunit
+GCOV_FLAG = --coverage
+
+TARGET = s21_matrix.a
 
 SRC = $(wildcard *.c)
-SRC_OBJ = $(SRC:.c=.o)
+AUX_SRC = $(wildcard aux_func/*.c)
 
-TARGET = main
+OBJ_DIR = f_obj
+
+SRC_OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
+AUX_SRC_OBJ = $(AUX_SRC:aux_func/%.c=$(OBJ_DIR)/%.o)
 
 
-all: $(TARGET) start clang-format s21_matrix.a test
+CLEAN_LIST = $(OBJ_DIR)/*.o s21_matrix.a coverage_report tests/test_matrix f_obj
 
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
-s21_matrix.a: $(SRC_OBJ)
-	ar r s21_matrix.a s21_*.o
+all: $(TARGET)
 
-%.o: %.c
+# Архив для статической библиотеки
+s21_matrix.a: $(SRC_OBJ) $(AUX_SRC_OBJ)
+	ar r s21_matrix.a $(SRC_OBJ) $(AUX_SRC_OBJ)
+
+# Компиляция исходников в объектные файлы
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
-	
-test_valgrind: s21_matrix.a
-	$(CC) -o test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
-	valgrind --tool=memcheck --leak-check=summary ./test_matrix
+
+$(OBJ_DIR)/%.o: aux_func/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 
 test: s21_matrix.a
-	$(CC) -o test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
-	./test_matrix
+	$(CC) -o tests/test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
+	./tests/test_matrix
 
-
-
-$(TARGET): $(SRC_OBJ)
-	$(CC) $(CFLAGS) -o $(TARGET) $(SRC_OBJ)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-start: $(TARGET)
-	valgrind --tool=memcheck --leak-check=summary ./main
-
+test_valgrind: s21_matrix.a
+	$(CC) -o tests/test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
+	valgrind --tool=memcheck --leak-check=summary ./tests/test_matrix
 
 
 gcov_report: 
 	mkdir -p coverage_report
-	$(CC) -o test_matrix  --coverage $(wildcard s21*.c) tests/test_matrix.c $(LDFLAGS)
-	./test_matrix
-	lcov -t "Coverage Report" -c -d . --output-file coverage_report/coverage.info
+	mkdir -p coverage_report/gcda_gcno
+
+	$(CC) -o tests/test_matrix  --coverage $(SRC) $(AUX_SRC) tests/test_matrix.c $(LDFLAGS)
+	./tests/test_matrix
+	lcov -t "Coverage Report" -c -d tests --output-file coverage_report/coverage.info
 	genhtml coverage_report/coverage.info --output-directory coverage_report/
 	xdg-open coverage_report/index.html
+	mv tests/*.gcda tests/*gcno coverage_report/gcda_gcno
 	
-clang-format:
-	clang-format -n *.c *.h
-	
+
+# Очищаем проект
 clean:
-	rm -rf *.o main s21_matrix.a *.gcda *gcno test_matrix coverage_report
+	rm -rf $(CLEAN_LIST)
 
+# Пересобрать все
 re: clean all
-
-
