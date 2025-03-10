@@ -318,21 +318,6 @@ START_TEST (transpose_4) {
 }
 END_TEST
 
-// START_TEST(determinant_1) {
-//   matrix_t A;
-//   double result;
-
-//   s21_create_matrix(1, 1, &A);
-
-//   A.matrix[0][0] = 6;
-
-//   int ret = s21_determinant(&A, &result);
-//   ck_assert_int_eq(ret, OK);
-
-//   s21_remove_matrix(&A);
-// }
-// END_TEST
-
 // START_TEST(test_s21_determinant_2) {
 //   matrix_t M_1;
 //   double detM, detRes = -2;
@@ -440,44 +425,163 @@ START_TEST(determinant_4) {
 }
 END_TEST
 
-// END_TEST
-// START_TEST(test_s21_determinant_6) {
-//   matrix_t M_1 = {0};
-//   double detM;
-//   s21_create_matrix(3, 2, &M_1);
-//   int ret = s21_determinant(&M_1, &detM);
-//   ck_assert_int_eq(ret, INCORRECT);
-//   s21_remove_matrix(&M_1);
-// }
-// END_TEST
-// START_TEST(test_s21_determinant_7) {
-//   matrix_t M_1;
-//   double detM;
-//   s21_create_matrix(1, 1, &M_1);
-//   M_1.matrix[0][0] = INFINITY;
-//   int ret = s21_determinant(&M_1, &detM);
-//   ck_assert_int_eq(ret, ERROR);
-//   s21_remove_matrix(&M_1);
-// }
-// END_TEST
-// START_TEST(test_s21_determinant_8) {
-//   matrix_t M_1;
-//   double detM;
-//   s21_create_matrix(1, 1, &M_1);
-//   M_1.matrix[0][0] = -INFINITY;
-//   int ret = s21_determinant(&M_1, &detM);
-//   ck_assert_int_eq(ret, ERROR);
-//   s21_remove_matrix(&M_1);
-// }
-// END_TEST
-// START_TEST(test_s21_determinant_9) {
-//   matrix_t M_1 = {0};
-//   double detM = 0;
-//   s21_create_matrix(3, 0, &M_1);
-//   int ret = s21_determinant(&M_1, &detM);
-//   ck_assert_int_eq(ret, INCORRECT);
-// }
-// END_TEST
+START_TEST(determinant_5) {
+  matrix_t A;
+  double result;
+
+  s21_create_matrix(1, 1, &A);
+
+  A.matrix[0][0] = 6;
+
+  int ret = s21_determinant(&A, &result);
+  ck_assert_int_eq(ret, OK);
+
+  s21_remove_matrix(&A);
+}
+END_TEST
+
+START_TEST(determinant_6) {
+  matrix_t A = {0};
+  double result;
+  s21_create_matrix(3, 2, &A);
+  int ret = s21_determinant(&A, &result);
+  ck_assert_int_eq(ret, INCORRECT_MATRIX);
+  s21_remove_matrix(&A);
+}
+END_TEST
+
+
+START_TEST(determinant_7) {
+  matrix_t A = {0};
+  double result = 0;
+  s21_create_matrix(3, 0, &A);
+  int ret = s21_determinant(&A, &result);
+  ck_assert_int_eq(ret, INCORRECT_MATRIX);
+}
+END_TEST
+
+START_TEST(calc_complements_1) {
+    matrix_t A;
+    matrix_t result;
+    
+    s21_create_matrix(2, 2, &A);
+    A.matrix[0][0] = 1;
+    A.matrix[0][1] = 2;
+    A.matrix[1][0] = 3;
+    A.matrix[1][1] = 4;
+    
+    int ret = s21_calc_complements(&A, &result);
+    ck_assert_int_eq(ret, OK);
+    
+    // Проверяем, что результат соответствует ожидаемому дополнению для 2x2
+    ck_assert_double_eq(result.matrix[0][0], 4);
+    ck_assert_double_eq(result.matrix[0][1], -3);
+    ck_assert_double_eq(result.matrix[1][0], -2);
+    ck_assert_double_eq(result.matrix[1][1], 1);
+    
+    s21_remove_matrix(&A);
+    s21_remove_matrix(&result);
+}
+END_TEST
+
+START_TEST(calc_complements_2) {
+    matrix_t A;
+    matrix_t result;
+    
+    s21_create_matrix(3, 3, &A);
+    A.matrix[0][0] = 1;
+    A.matrix[0][1] = 2;
+    A.matrix[0][2] = 3;
+    A.matrix[1][0] = 0;
+    A.matrix[1][1] = 4;
+    A.matrix[1][2] = 5;
+    A.matrix[2][0] = 1;
+    A.matrix[2][1] = 0;
+    A.matrix[2][2] = 6;
+    
+    int ret = s21_calc_complements(&A, &result);
+    ck_assert_int_eq(ret, OK);
+    
+    // Проверяем, что результат соответствует ожидаемому дополнению для 3x3
+    ck_assert_double_eq(result.matrix[0][0], 24);
+    ck_assert_double_eq(result.matrix[0][1], -6);
+    ck_assert_double_eq(result.matrix[0][2], 4);
+    ck_assert_double_eq(result.matrix[1][0], -14);
+    ck_assert_double_eq(result.matrix[1][1], 6);
+    ck_assert_double_eq(result.matrix[1][2], 2);
+    ck_assert_double_eq(result.matrix[2][0], 4);
+    ck_assert_double_eq(result.matrix[2][1], -4);
+    ck_assert_double_eq(result.matrix[2][2], 4);
+    
+    s21_remove_matrix(&A);
+    s21_remove_matrix(&result);
+}
+END_TEST
+
+START_TEST(calc_complements_3) {
+    matrix_t A;
+    matrix_t result;
+    
+    s21_create_matrix(1, 1, &A);
+    A.matrix[0][0] = 5;
+
+    // Ожидаем ошибку для матрицы 1x1
+    int ret = s21_calc_complements(&A, &result);
+    ck_assert_int_eq(ret, CALCULATION_ERROR);
+    
+    s21_remove_matrix(&A);
+}
+END_TEST
+
+START_TEST(calc_complements_4) {
+    matrix_t A;
+    matrix_t result;
+    
+    s21_create_matrix(2, 3, &A);
+    
+    // Ожидаем ошибку для матрицы, не являющейся квадратной
+    int ret = s21_calc_complements(&A, &result);
+    ck_assert_int_eq(ret, CALCULATION_ERROR);
+    
+    s21_remove_matrix(&A);
+}
+END_TEST
+
+START_TEST(calc_complements_5) {
+    matrix_t A;
+    matrix_t result;
+    
+    s21_create_matrix(4, 4, &A);
+    A.matrix[0][0] = 1;
+    A.matrix[0][1] = 0;
+    A.matrix[0][2] = 0;
+    A.matrix[0][3] = 0;
+    A.matrix[1][0] = 0;
+    A.matrix[1][1] = 1;
+    A.matrix[1][2] = 0;
+    A.matrix[1][3] = 0;
+    A.matrix[2][0] = 0;
+    A.matrix[2][1] = 0;
+    A.matrix[2][2] = 1;
+    A.matrix[2][3] = 0;
+    A.matrix[3][0] = 0;
+    A.matrix[3][1] = 0;
+    A.matrix[3][2] = 0;
+    A.matrix[3][3] = 1;
+    
+    int ret = s21_calc_complements(&A, &result);
+    ck_assert_int_eq(ret, OK);
+    
+    // Проверка, что результат соответствует ожидаемым значениям
+    ck_assert_double_eq(result.matrix[0][0], 1);
+    ck_assert_double_eq(result.matrix[1][1], 1);
+    ck_assert_double_eq(result.matrix[2][2], 1);
+    ck_assert_double_eq(result.matrix[3][3], 1);
+    
+    s21_remove_matrix(&A);
+    s21_remove_matrix(&result);
+}
+END_TEST
 
     Suite *matrix_suite(void){
     Suite *s;
@@ -506,7 +610,13 @@ END_TEST
     tcase_add_test(tc_core, determinant_2);
     tcase_add_test(tc_core, determinant_3);
     tcase_add_test(tc_core, determinant_4);
-
+    tcase_add_test(tc_core, determinant_5);
+    tcase_add_test(tc_core, determinant_6);
+    tcase_add_test(tc_core, determinant_7);
+    tcase_add_test(tc_core, calc_complements_1);
+    tcase_add_test(tc_core, calc_complements_2);
+    tcase_add_test(tc_core, calc_complements_3);
+    tcase_add_test(tc_core, calc_complements_4);
 
 
     suite_add_tcase(s, tc_core);
