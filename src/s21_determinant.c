@@ -1,19 +1,15 @@
 #include "s21_matrix.h"
 
 int s21_check_pivot(matrix_t *tmp, int *index_pivot) {
-  printf("\nbefore: s21_check pivot\n");
-  s21_print_matrix(tmp);
 
   int row_pivot = *index_pivot;
-  // index_pivot - upper
-  // row pivot - inder
-
   int swap_count = 0;
 
   while (tmp->matrix[row_pivot][*index_pivot] == 0 &&
          row_pivot < tmp->rows - 1) {
     row_pivot++;
   }
+
   if (row_pivot != *index_pivot) {
     for (int j = 0; j < tmp->columns; j++) {
       double temp = tmp->matrix[*index_pivot][j];  // up
@@ -23,8 +19,6 @@ int s21_check_pivot(matrix_t *tmp, int *index_pivot) {
     swap_count = 1;
   }
 
-  printf("\nafter: s21_check pivot\n");
-  s21_print_matrix(tmp);
   return swap_count;
 }
 
@@ -38,18 +32,13 @@ int s21_zero_out(matrix_t *tmp, matrix_t *A, int *index_pivot) {
     }
 
     for (int i = *index_pivot + 1; i < A->rows; i++) {
-      double factorial = tmp->matrix[i][*index_pivot] /
-                         tmp->matrix[*index_pivot][*index_pivot];
-      // printf("\nЗначение1: %f / Значение 2: %f\n",
-      // tmp->matrix[i][*index_pivot], tmp->matrix[*index_pivot][*index_pivot]);
-      // printf("\nFactorial: %f\n", factorial);
+      double factorial = tmp->matrix[i][*index_pivot] / tmp->matrix[*index_pivot][*index_pivot];
+
       for (int j = 0; j < A->columns; j++) {
-        // printf("\n%f - (%f * %f)\n", tmp->matrix[i][j], factorial,
-        // tmp->matrix[*index_pivot][j]);
+
         tmp->matrix[i][j] =
             tmp->matrix[i][j] - (factorial * tmp->matrix[*index_pivot][j]);
       }
-      s21_print_matrix(tmp);
     }
 
     *index_pivot = *index_pivot + 1;
@@ -58,17 +47,14 @@ int s21_zero_out(matrix_t *tmp, matrix_t *A, int *index_pivot) {
 }
 
 int s21_determinant(matrix_t *A, double *result) {
+  if (A->columns != A->rows){return INCORRECT_MATRIX;}
   int status_matrix = s21_check_matrices(1, A);
   matrix_t tmp = {};
+
   s21_create_matrix(A->rows, A->columns, &tmp);
   s21_copy_matrix(A, &tmp);
 
   int index_pivot = 0;
-
-  // printf("\n");
-  // s21_print_matrix(&tmp);
-  // printf("\n");
-
   int swap_sign = s21_zero_out(&tmp, A, &index_pivot);
 
   *result = tmp.matrix[0][0];
@@ -78,8 +64,7 @@ int s21_determinant(matrix_t *A, double *result) {
   }
 
   *result *= swap_sign;
-  // printf("\nДетерминант: %f\n", *result);
-  s21_remove_matrix(&tmp);
 
+  s21_remove_matrix(&tmp);
   return OK;
 }
