@@ -21,11 +21,11 @@ $(OBJ_DIR):
 
 all: $(TARGET)
 
-# Архив для статической библиотеки
+
 s21_matrix.a: $(SRC_OBJ) $(AUX_SRC_OBJ)
 	ar r s21_matrix.a $(SRC_OBJ) $(AUX_SRC_OBJ)
 
-# Компиляция исходников в объектные файлы
+
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -54,9 +54,9 @@ gcov_report:
 	mv tests/*.gcda tests/*gcno coverage_report/gcda_gcno
 	
 
-# Очищаем проект
+
 clean:
 	rm -rf $(CLEAN_LIST)
 
-# Пересобрать все
+
 re: clean all
