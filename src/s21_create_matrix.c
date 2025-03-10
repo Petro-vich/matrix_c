@@ -7,13 +7,13 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {
     MatrixCheck = INCORRECT_MATRIX;
   } else {
     result->matrix = (double **)malloc(
-        rows * sizeof(double *));  // массив указателей на строки
+        rows * sizeof(double *));  
     if (!result->matrix) {
       MatrixCheck = INCORRECT_MATRIX;
     }
     for (int i = 0; MatrixCheck == OK && i < rows; i++) {
       result->matrix[i] =
-          (double *)malloc(columns * sizeof(double));  // For every one columns
+          (double *)malloc(columns * sizeof(double));  
       if (!result->matrix[i]) {
         MatrixCheck = INCORRECT_MATRIX;
         for (int j = 0; j < i; j++) {
