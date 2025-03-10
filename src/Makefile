@@ -53,7 +53,8 @@ gcov_report:
 	xdg-open coverage_report/index.html
 	mv tests/*.gcda tests/*gcno coverage_report/gcda_gcno
 	
-
+clang-format:
+	clang-format -i *.c *.h aux_func/*.c test_matrix/*.c
 
 clean:
 	rm -rf $(CLEAN_LIST)
