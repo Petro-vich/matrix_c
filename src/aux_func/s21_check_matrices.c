@@ -9,9 +9,14 @@ int s21_check_matrices(int count, ...) {
   double columns_matrix;
 
   for (int i = 0; i < 1; i++) {
-    matrix_t *matrix = va_arg(args, matrix_t *);
+    matrix_t const *matrix = va_arg(args, matrix_t *);
 
-    if (!matrix || !matrix->matrix) {
+    if (!matrix) {
+      va_end(args);
+      return INCORRECT_MATRIX;
+    }
+
+    if (!matrix->matrix) {
       va_end(args);
       return INCORRECT_MATRIX;
     }
@@ -20,7 +25,7 @@ int s21_check_matrices(int count, ...) {
   }
 
   for (int j = 1; j < count; j++) {
-    matrix_t *matrix = va_arg(args, matrix_t *);
+    matrix_t const *matrix = va_arg(args, matrix_t *);
     if (matrix->rows != rows_matrix || matrix->columns != columns_matrix) {
       va_end(args);
       return CALCULATION_ERROR;

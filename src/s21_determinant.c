@@ -1,71 +1,48 @@
 #include "s21_matrix.h"
 
-int s21_check_pivot(matrix_t *tmp, int *index_pivot) {
-  int row_pivot = *index_pivot;
-  int swap_count = 0;
-
-  while (tmp->matrix[row_pivot][*index_pivot] == 0 &&
-         row_pivot < tmp->rows - 1) {
-    row_pivot++;
+int s21_determinant(matrix_t *A, double *result) {
+  if (!A || !A->matrix || A->rows <= 0 || A->columns <= 0) {
+    return INCORRECT_MATRIX;
+  }
+  if (A->rows != A->columns) {
+    return CALCULATION_ERROR;
   }
 
-  if (row_pivot != *index_pivot) {
-    for (int j = 0; j < tmp->columns; j++) {
-      double temp = tmp->matrix[*index_pivot][j];  // up
-      tmp->matrix[*index_pivot][j] = tmp->matrix[row_pivot][j];
-      tmp->matrix[row_pivot][j] = temp;
-    }
-    swap_count = 1;
+  int status = OK;
+
+  if (A->rows == 1) {
+    *result = A->matrix[0][0];
+    return OK;
   }
 
-  return swap_count;
-}
+  if (A->rows == 2) {
+    *result =
+        A->matrix[0][0] * A->matrix[1][1] - A->matrix[0][1] * A->matrix[1][0];
+    return OK;
+  }
 
-int s21_zero_out(matrix_t *tmp, matrix_t *A, int *index_pivot) {
-  int swap_sign = 1;
+  *result = 0;
+  for (int j = 0; j < A->columns; j++) {
+    matrix_t minor;
+    s21_create_matrix(A->rows - 1, A->columns - 1, &minor);
 
-  while (*index_pivot < A->rows - 1) {
-    swap_sign *= s21_check_pivot(tmp, index_pivot) ? -1 : 1;
-    if (tmp->matrix[*index_pivot][*index_pivot] == 0) {
-      return 0;
-    }
-
-    for (int i = *index_pivot + 1; i < A->rows; i++) {
-      double factorial = tmp->matrix[i][*index_pivot] /
-                         tmp->matrix[*index_pivot][*index_pivot];
-
-      for (int j = 0; j < A->columns; j++) {
-        tmp->matrix[i][j] =
-            tmp->matrix[i][j] - (factorial * tmp->matrix[*index_pivot][j]);
+    for (int m = 1, p = 0; m < A->rows; m++, p++) {
+      for (int n = 0, q = 0; n < A->columns; n++) {
+        if (n == j) continue;
+        minor.matrix[p][q] = A->matrix[m][n];
+        q++;
       }
     }
 
-    *index_pivot = *index_pivot + 1;
-  }
-  return swap_sign;
-}
+    double minor_det;
+    s21_determinant(&minor, &minor_det);
 
-int s21_determinant(matrix_t *A, double *result) {
-  if (A->columns != A->rows) {
-    return INCORRECT_MATRIX;
-  }
-  int status_matrix = s21_check_matrices(1, A);
-  matrix_t tmp = {};
+    int sign = (j % 2 == 0) ? 1 : -1;
 
-  s21_create_matrix(A->rows, A->columns, &tmp);
-  s21_copy_matrix(A, &tmp);
+    *result += sign * A->matrix[0][j] * minor_det;
 
-  int index_pivot = 0;
-  int swap_sign = s21_zero_out(&tmp, A, &index_pivot);
-
-  *result = tmp.matrix[0][0];
-
-  for (int i = 1, j = 1; i < tmp.rows; i++, j++) {
-    *result *= tmp.matrix[i][j];
+    s21_remove_matrix(&minor);
   }
 
-  *result *= swap_sign;
-
-  s21_remove_matrix(&tmp);
-  return OK;
+  return status;
 }

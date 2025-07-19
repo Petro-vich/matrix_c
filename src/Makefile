@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Werror -std=c11
 LDFLAGS = -lcheck -lm -lsubunit
 GCOV_FLAG = --coverage
 
@@ -23,14 +23,14 @@ all: $(TARGET)
 
 
 s21_matrix.a: $(SRC_OBJ) $(AUX_SRC_OBJ)
-	ar r s21_matrix.a $(SRC_OBJ) $(AUX_SRC_OBJ)
+	@ar r s21_matrix.a $(SRC_OBJ) $(AUX_SRC_OBJ)
 
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/%.o: aux_func/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 
 test: s21_matrix.a
@@ -39,7 +39,7 @@ test: s21_matrix.a
 
 test_valgrind: s21_matrix.a
 	$(CC) -o tests/test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
-	valgrind --tool=memcheck --leak-check=summary ./tests/test_matrix
+	valgrind --leak-check=full --track-origins=yes ./tests/test_matrix 
 
 
 gcov_report: 
@@ -54,7 +54,8 @@ gcov_report:
 	mv tests/*.gcda tests/*gcno coverage_report/gcda_gcno
 	
 clang-format:
-	clang-format -i *.c *.h aux_func/*.c test_matrix/*.c
+	clang-format -n *.c *.h aux_func/*.c aux_func/*.h tests/*.c
+
 
 clean:
 	rm -rf $(CLEAN_LIST)

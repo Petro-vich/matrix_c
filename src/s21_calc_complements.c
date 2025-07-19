@@ -1,7 +1,7 @@
 #include "s21_matrix.h"
 
 int s21_calc_complements(matrix_t *A, matrix_t *result) {
-  if (A->rows != A->columns || A->rows < 2) {
+  if (A->rows != A->columns || A->rows < 1) {
     return CALCULATION_ERROR;
   }
 
@@ -25,12 +25,11 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {
 
       double minor_det;
       s21_determinant(&minor, &minor_det);
-      
+
       result->matrix[i][j] = ((i + j) % 2 == 0 ? 1 : -1) * minor_det;
 
       s21_remove_matrix(&minor);
     }
   }
-
   return OK;
 }
