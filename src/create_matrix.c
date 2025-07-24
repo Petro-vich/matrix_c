@@ -1,6 +1,6 @@
-#include "s21_matrix.h"
+#include "matrix.h"
 
-int s21_create_matrix(int rows, int columns, matrix_t *result) {
+int create_matrix(int rows, int columns, matrix_t *result) {
   int MatrixCheck = OK;
 
   if (rows <= 0 || columns <= 0 || result == NULL) {

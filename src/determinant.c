@@ -1,6 +1,6 @@
-#include "s21_matrix.h"
+#include "matrix.h"
 
-int s21_determinant(matrix_t *A, double *result) {
+int determinant(matrix_t *A, double *result) {
   if (!A || !A->matrix || A->rows <= 0 || A->columns <= 0) {
     return INCORRECT_MATRIX;
   }
@@ -24,7 +24,7 @@ int s21_determinant(matrix_t *A, double *result) {
   *result = 0;
   for (int j = 0; j < A->columns; j++) {
     matrix_t minor;
-    s21_create_matrix(A->rows - 1, A->columns - 1, &minor);
+    create_matrix(A->rows - 1, A->columns - 1, &minor);
 
     for (int m = 1, p = 0; m < A->rows; m++, p++) {
       for (int n = 0, q = 0; n < A->columns; n++) {
@@ -35,13 +35,13 @@ int s21_determinant(matrix_t *A, double *result) {
     }
 
     double minor_det;
-    s21_determinant(&minor, &minor_det);
+    determinant(&minor, &minor_det);
 
     int sign = (j % 2 == 0) ? 1 : -1;
 
     *result += sign * A->matrix[0][j] * minor_det;
 
-    s21_remove_matrix(&minor);
+    remove_matrix(&minor);
   }
 
   return status;

@@ -1,17 +1,17 @@
-#include "s21_matrix.h"
+#include "matrix.h"
 
-int s21_calc_complements(matrix_t *A, matrix_t *result) {
+int calc_complements(matrix_t *A, matrix_t *result) {
   if (A->rows != A->columns || A->rows < 1) {
     return CALCULATION_ERROR;
   }
 
-  s21_create_matrix(A->rows, A->columns, result);
-  s21_check_matrices(2, A, result);
+  create_matrix(A->rows, A->columns, result);
+  check_matrices(2, A, result);
 
   for (int i = 0; i < A->rows; i++) {
     for (int j = 0; j < A->columns; j++) {
       matrix_t minor;
-      s21_create_matrix(A->rows - 1, A->columns - 1, &minor);
+      create_matrix(A->rows - 1, A->columns - 1, &minor);
 
       for (int m = 0, p = 0; m < A->rows; m++) {
         if (m == i) continue;
@@ -24,11 +24,11 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {
       }
 
       double minor_det;
-      s21_determinant(&minor, &minor_det);
+      determinant(&minor, &minor_det);
 
       result->matrix[i][j] = ((i + j) % 2 == 0 ? 1 : -1) * minor_det;
 
-      s21_remove_matrix(&minor);
+      remove_matrix(&minor);
     }
   }
   return OK;

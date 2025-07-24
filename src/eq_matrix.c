@@ -1,7 +1,7 @@
-#include "s21_matrix.h"
+#include "matrix.h"
 
-int s21_eq_matrix(matrix_t *A, matrix_t *B) {
-  if (s21_check_matrices(2, A, B) != OK) return FAILURE;
+int eq_matrix(matrix_t *A, matrix_t *B) {
+  if (check_matrices(2, A, B) != OK) return FAILURE;
 
   int status = SUCCESS;
 

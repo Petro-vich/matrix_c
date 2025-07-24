@@ -1,6 +1,6 @@
-#include "../s21_matrix.h"
+#include "../matrix.h"
 
-int s21_check_matrices(int count, ...) {
+int check_matrices(int count, ...) {
   if (count < 1) return INCORRECT_MATRIX;
 
   va_list args;

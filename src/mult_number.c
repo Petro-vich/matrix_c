@@ -1,9 +1,9 @@
-#include "s21_matrix.h"
+#include "matrix.h"
 
-int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
-  int status_matrix = s21_check_matrices(1, A);
+int mult_number(matrix_t *A, double number, matrix_t *result) {
+  int status_matrix = check_matrices(1, A);
   if (status_matrix == OK) {
-    status_matrix = s21_create_matrix(A->rows, A->columns, result);
+    status_matrix = create_matrix(A->rows, A->columns, result);
   }
 
   if (status_matrix == OK) {

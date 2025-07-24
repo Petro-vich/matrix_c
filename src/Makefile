@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11
 LDFLAGS = -lcheck -lm -lsubunit
 GCOV_FLAG = --coverage
 
-TARGET = s21_matrix.a
+TARGET = matrix.a
 
 SRC = $(wildcard *.c)
 AUX_SRC = $(wildcard aux_func/*.c)
@@ -14,7 +14,7 @@ SRC_OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 AUX_SRC_OBJ = $(AUX_SRC:aux_func/%.c=$(OBJ_DIR)/%.o)
 
 
-CLEAN_LIST = $(OBJ_DIR)/*.o s21_matrix.a coverage_report tests/test_matrix f_obj
+CLEAN_LIST = $(OBJ_DIR)/*.o matrix.a coverage_report tests/test_matrix f_obj
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -22,8 +22,8 @@ $(OBJ_DIR):
 all: $(TARGET)
 
 
-s21_matrix.a: $(SRC_OBJ) $(AUX_SRC_OBJ)
-	@ar r s21_matrix.a $(SRC_OBJ) $(AUX_SRC_OBJ)
+matrix.a: $(SRC_OBJ) $(AUX_SRC_OBJ)
+	@ar r matrix.a $(SRC_OBJ) $(AUX_SRC_OBJ)
 
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
@@ -33,12 +33,12 @@ $(OBJ_DIR)/%.o: aux_func/%.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 
-test: s21_matrix.a
-	$(CC) -o tests/test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
+test: matrix.a
+	$(CC) -o tests/test_matrix tests/test_matrix.c -L -l matrix.a $(LDFLAGS)
 	./tests/test_matrix
 
-test_valgrind: s21_matrix.a
-	$(CC) -o tests/test_matrix tests/test_matrix.c -L -l s21_matrix.a $(LDFLAGS)
+test_valgrind: matrix.a
+	$(CC) -o tests/test_matrix tests/test_matrix.c -L -l matrix.a $(LDFLAGS)
 	valgrind --leak-check=full --track-origins=yes ./tests/test_matrix 
 
 
