@@ -1,4 +1,4 @@
-# s21_matrix
+# matrix_c
 
 Библиотека для работы с матрицами на языке C.
 
@@ -39,17 +39,17 @@ make clean      # Очистка файлов сборки
 ## Пример использования
 
 ```c
-#include "s21_matrix.h"
+#include "_matrix.h"
 
 int main() {
     matrix_t A, B, result;
-    s21_create_matrix(2, 2, &A);
-    s21_create_matrix(2, 2, &B);
+    _create_matrix(2, 2, &A);
+    _create_matrix(2, 2, &B);
     // ... заполнение матриц ...
-    s21_sum_matrix(&A, &B, &result);
-    s21_remove_matrix(&A);
-    s21_remove_matrix(&B);
-    s21_remove_matrix(&result);
+    _sum_matrix(&A, &B, &result);
+    _remove_matrix(&A);
+    _remove_matrix(&B);
+    _remove_matrix(&result);
     return 0;
 }
 ```
@@ -66,6 +66,6 @@ make test_valgrind
 
 - Соответствие стандарту C11
 - Google Style
-- Статическая библиотека (s21_matrix.a)
+- Статическая библиотека (_matrix.a)
 - Полное покрытие unit-тестами
 - Эффективное выделение памяти для матриц
